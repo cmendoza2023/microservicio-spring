@@ -1,37 +1,32 @@
 jobs:
-
-job:
-
-trigger:
-- features-ms-CristianMendoza-mensaje
-
-pool:
+- job:
+  pool:
     vmImage: 'ubuntu-latest'
-    
-steps:
-- script: |
+  trigger:
+    branches:
+      include:
+      - features-ms-CristianMendoza-mensaje
+  steps:
+  - script: |
       git fetch --unshallow
-  displayName: 'convert to non-shallow clone' 
+    displayName: 'Convert to non-shallow clone' 
 
-steps:
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      tasks: 'build'
+      publishJUnitResults: true
+      testResultsFiles: '**/TEST-*.xml'
+      codeCoverageToolOption: 'JaCoCo'
+      codeCoverageClassFilesDirectories: 'build/classes/main/'
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: false
+      spotBugsAnalysis: false
 
-- task: Gradle@3
-  inputs:
-    gradleWrapperFile: 'gradlew'
-    tasks: 'build'
-    publishJUnitResults: true
-    testResultsFiles: '**/TEST-*.xml'
-    codeCoverageToolOption: 'JaCoCo'
-    codeCoverageClassFilesDirectories: 'build/classes/main/'
-    javaHomeOption: 'JDKVersion'
-    sonarQubeRunAnalysis: false
-    spotBugsAnalysis: false
-
-job:
-
-pool:
-    'Default'
-steps:
+- job:
+  pool:
+    name: 'Default'
+  steps:
   - task: Kubernetes@1
     inputs:
       connectionType: 'None'
@@ -39,6 +34,6 @@ steps:
       arguments: 'deployment microservice --image=cristianmendoza/testing-web'
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
-inputs:
-    script: 'kubectl port-forward deployment/testing-web 8080:8085'
+
+  - script: 'kubectl port-forward deployment/testing-web 8080:8085'
     displayName: 'Redirección de puerto'
