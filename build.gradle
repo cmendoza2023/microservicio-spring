@@ -36,3 +36,4 @@ jacocoTestReport  {
 		xml.enabled = true // Habilitar reporte XML
 		csv.enabled = false // Deshabilitar reporte CSV
 	}
+}
