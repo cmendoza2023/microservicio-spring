@@ -22,7 +22,7 @@ steps:
     javaHomeOption: 'JDKVersion'
     sonarQubeRunAnalysis: false
     spotBugsAnalysis: false
-
+job:
 pool:
     'Default'
 steps:
