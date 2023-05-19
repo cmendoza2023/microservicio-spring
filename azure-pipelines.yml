@@ -1,14 +1,13 @@
-# Gradle
-# Build your Java project and run tests with Gradle using a Gradle wrapper script.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
 trigger:
-- main
+- features-ms-CristianMendoza-mensaje
 
 pool:
     vmImage: 'ubuntu-latest'
-
+    
+steps:
+- script: |
+      git fetch --unshallow
+  displayName: 'convert to non-shallow clone' 
 
 steps:
 
@@ -23,18 +22,17 @@ steps:
     javaHomeOption: 'JDKVersion'
     sonarQubeRunAnalysis: false
     spotBugsAnalysis: false
-- task: Docker@2
-  inputs:
-    containerRegistry: 'accesodocker'
-    command: 'login'
-- task: Docker@2
-  inputs:
-    containerRegistry: 'accesodocker'
-    repository: 'cristianmendoza/testing-web'
-    command: 'build'
-    Dockerfile: '**/Dockerfile'
-- task: Docker@2
-  inputs:
-    containerRegistry: 'accesodocker'
-    repository: 'cristianmendoza/testing-web'
-    command: 'push'
+
+pool:
+    'Default'
+steps:
+  - task: Kubernetes@1
+    inputs:
+      connectionType: 'None'
+      command: 'create'
+      arguments: 'deployment microservice --image=cristianmendoza/testing-web'
+      secretType: 'dockerRegistry'
+      containerRegistryType: 'Azure Container Registry'
+inputs:
+    script: 'kubectl port-forward deployment/testing-web 8080:8085'
+    displayName: 'Redirección de puerto'
