@@ -18,18 +18,38 @@ jobs:
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'JaCoCo'
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
+      pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
+      reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
+      failIfCoverageEmpty: true
 
 - job:
   pool:
     name: 'Default'
   steps:
-  - task: Kubernetes@1
+  - task: Docker@2
     inputs:
-      connectionType: 'None'
-      command: 'create'
-      arguments: 'deployment microservice --image=cristianmendoza/testing-web'
-      secretType: 'dockerRegistry'
-      containerRegistryType: 'Azure Container Registry'
-
-  - script: 'kubectl port-forward deployment/testing-web 8080:8085'
-    displayName: 'Redirección de puerto'
+      containerRegistry: 'Docker'
+      repository: 'clagosu/spring-clinic'
+      command: 'build'
+      Dockerfile: '**/Dockerfile'
+  
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker'
+      repository: 'clagosu/spring-clinic'
+      command: 'push'
+  
+#- job: 
+#  pool: 'Default'
+#  steps:
+#  - task: Kubernetes@1
+#    inputs:
+#      connectionType: 'None'
+#      command: 'apply'
+#      arguments: '-f deployment-app.yaml'
+#  
+#  - script: kubectl port-forward deploy/petclinic-deployment 8086:8085
