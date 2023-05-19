@@ -2,10 +2,6 @@ jobs:
 - job:
   pool:
     vmImage: 'ubuntu-latest'
-  trigger:
-    branches:
-      include:
-      - features-ms-CristianMendoza-mensaje
   steps:
   - script: |
       git fetch --unshallow
