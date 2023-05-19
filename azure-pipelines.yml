@@ -1,3 +1,7 @@
+jobs:
+
+job:
+
 trigger:
 - features-ms-CristianMendoza-mensaje
 
@@ -22,7 +26,9 @@ steps:
     javaHomeOption: 'JDKVersion'
     sonarQubeRunAnalysis: false
     spotBugsAnalysis: false
+
 job:
+
 pool:
     'Default'
 steps:
