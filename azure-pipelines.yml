@@ -6,7 +6,9 @@
 trigger:
 - main
 
-pool: 'Default'
+pool:
+    vmImage: 'ubuntu-latest'
+  displayName: Build
 
 steps:
 - task: Gradle@2
@@ -15,7 +17,7 @@ steps:
     gradleWrapperFile: 'gradlew'
     gradleOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '11.0.19'
+    #jdkVersionOption: '1.18'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
