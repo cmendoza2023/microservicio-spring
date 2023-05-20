@@ -5,11 +5,9 @@ plugins {
 	id 'jacoco'
 }
 
-apply plugin: 'java'
-
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
@@ -22,18 +20,23 @@ dependencies {
 
 test {
 	useJUnitPlatform()
-	finalizedBy jacocoTestReport
-	jacoco.includeNoLocationClasses = true
-	jacoco.excludes = ['jdk.internal.*']
-	jacoco.includes = []	
 }
 
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
 
-jacocoTestReport  {
-	dependsOn test
-	reports {
-		html.enabled = false // Deshabilitar reporte HTML
-		xml.enabled = true // Habilitar reporte XML
-		csv.enabled = false // Deshabilitar reporte CSV
-	}
+jacoco {
+    toolVersion = "0.8.8"
+    
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled true
+		xml.enabled true
+    }
 }
