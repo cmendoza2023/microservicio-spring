@@ -25,23 +25,11 @@ jobs:
       pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
       reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
       failIfCoverageEmpty: true
-
-- job:
-  pool:
-    name: 'Default'
-  steps:
   - task: Docker@2
     inputs:
-      containerRegistry: 'Docker'
-      repository: 'cristianmendoza/testing-web'
-      command: 'build'
-      Dockerfile: '**/Dockerfile'
-  
-  - task: Docker@2
-    inputs:
-      containerRegistry: 'Docker'
-      repository: 'cristianmendoza/testing-web'
-      command: 'push'
+      containerRegistry: 'docker-cristianmendoza'
+      command: 'login'
+ 
   
 #- job: 
 #  pool: 'Default'
