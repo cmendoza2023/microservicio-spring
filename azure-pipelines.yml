@@ -10,14 +10,13 @@ jobs:
   - task: Gradle@3
     inputs:
       gradleWrapperFile: 'gradlew'
-      tasks: 'build'
+      tasks: 'build jacocoTestReport'
       publishJUnitResults: true
       testResultsFiles: '**/TEST-*.xml'
-      codeCoverageToolOption: 'JaCoCo'
-      codeCoverageClassFilesDirectories: 'build/classes/main/'
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: false
       spotBugsAnalysis: false
+    displayName: Build
   - task: PublishCodeCoverageResults@1
     inputs:
       codeCoverageTool: 'JaCoCo'
