@@ -1,3 +1,5 @@
+trigger:
+- feature-ms-CristianMendoza-mensaje
 jobs:
 - job:
   pool:
@@ -35,13 +37,13 @@ jobs:
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
   
-#- job: 
-#  pool: 'Default'
-#  steps:
-#  - task: Kubernetes@1
-#    inputs:
-#      connectionType: 'None'
-#      command: 'apply'
-#      arguments: '-f deployment-app.yaml'
-#  
-#  - script: kubectl port-forward deploy/petclinic-deployment 8086:8085
+- job: 
+  pool: 'Default'
+  steps:
+  - task: Kubernetes@1
+    inputs:
+      connectionType: 'None'
+      command: 'apply'
+      arguments: '-f deployment-app.yaml'
+  
+  - script: kubectl port-forward deploy/testing-web 8080:8080
