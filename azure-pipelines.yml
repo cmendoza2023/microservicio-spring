@@ -46,4 +46,4 @@ jobs:
       command: 'apply'
       arguments: '-f deployment-app.yaml'
   
-  - script: kubectl port-forward deploy/testing-web 8080:8080
+  - script: kubectl port-forward deploy/microservicio-deployment 8080:8080
