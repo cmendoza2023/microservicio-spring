@@ -32,11 +32,10 @@ jobs:
       organization: 'devopsfundation'
       projectKey: 'cmendoza2023_microservicio-spring'
       projectName: 'microservicio-spring'
-      scannerMode: 'Other'
   - task: Gradle@3
     inputs:
       gradleWrapperFile: 'gradlew'
-      tasks: 'sonarcube'
+      tasks: 'sonar'
       publishJUnitResults: false
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: true
