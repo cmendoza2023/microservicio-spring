@@ -51,5 +51,5 @@ jobs:
     displayName: 'Despliegue de contenedor'
   - script: sleep 30
     displayName: 'Pausa de 30 segundos de espera a que el container este listo'
-  - script: kubectl port-forward deploy/microservicio-deployment 8080:8080
+  - script: nohup kubectl port-forward deploy/microservicio-deployment 8080:8080&
     displayName: 'Redirección de puerto para el contenedor'
