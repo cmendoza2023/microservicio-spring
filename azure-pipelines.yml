@@ -30,6 +30,7 @@ jobs:
     inputs:
       SonarCloud: 'sonar-github'
       organization: 'devopsfundation'
+      projectKey: 'cmendoza2023_microservicio-spring'
       scannerMode: 'Other'
   - task: Gradle@3
     inputs:
