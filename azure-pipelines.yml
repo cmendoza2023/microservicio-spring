@@ -26,16 +26,19 @@ jobs:
       pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
       reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
       failIfCoverageEmpty: true
+    displayName: 'Reporte Jacoco'
   - task: Docker@2
     inputs:
       containerRegistry: 'docker-cristianmendoza'
       command: 'login'
+    displayName: 'Conexión a Docker'
   - task: Docker@2
     inputs:
       containerRegistry: 'docker-cristianmendoza'
       repository: 'cristianmendoza/testing-web'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
+    displayName: 'Build y Push de la imagen Docker'
   
 - job: 
   pool: 'Default'
@@ -45,5 +48,8 @@ jobs:
       connectionType: 'None'
       command: 'apply'
       arguments: '-f deployment-app.yaml'
-  
+    displayName: 'Despliegue de contenedor'
+  - script: sleep 30
+    displayName: 'Pausa de 30 segundos de espera a que el container este listo'
   - script: kubectl port-forward deploy/microservicio-deployment 8080:8080
+    displayName: 'Redirección de puerto para el contenedor'
