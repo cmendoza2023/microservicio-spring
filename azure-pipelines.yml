@@ -32,11 +32,16 @@ jobs:
       SonarCloud: 'conexion-sonarcloud'
       organization: 'mendocorp'
       scannerMode: 'Other'
-    displayName: 'Preparación para pruebas de SonarCloud'
+      extraProperties: |
+        # Additional properties that will be passed to the scanner, 
+        # Put one key=value per line, example:
+        # sonar.exclusions=**/*.bin
+        sonar.projectKey=mendocorp_Fundamentos-DevOps
+        sonar.projectName=Fundamentos-DevOps
   - task: Gradle@3
     inputs:
       gradleWrapperFile: 'gradlew'
-      tasks: 'sonarqube'
+      tasks: 'sonar'
       publishJUnitResults: false
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: true
@@ -44,6 +49,7 @@ jobs:
       sonarQubeGradlePluginVersion: '3.5.0.2730'
       spotBugsAnalysis: false
     displayName: 'Analisis Sonar Qube'
+  - task: SonarCloudAnalyze@1    
   - task: Docker@2
     inputs:
       containerRegistry: 'docker-cristianmendoza'
