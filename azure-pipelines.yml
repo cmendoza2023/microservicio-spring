@@ -27,17 +27,17 @@ jobs:
       reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
       failIfCoverageEmpty: true
     displayName: 'Reporte Jacoco'
-  - task: SonarCloudPrepare@1
-    inputs:
-      SonarCloud: 'conexion-sonarcloud'
-      organization: 'mendocorp'
-      scannerMode: 'Other'
-      extraProperties: |
+#  - task: SonarCloudPrepare@1
+#    inputs:
+#      SonarCloud: 'conexion-sonarcloud'
+#      organization: 'mendocorp'
+#      scannerMode: 'Other'
+#      extraProperties: |
         # Additional properties that will be passed to the scanner, 
         # Put one key=value per line, example:
         # sonar.exclusions=**/*.bin
-        sonar.projectKey=mendocorp_Fundamentos-DevOps
-        sonar.projectName=Fundamentos-DevOps
+#        sonar.projectKey=mendocorp_Fundamentos-DevOps
+#        sonar.projectName=Fundamentos-DevOps
   - task: Gradle@3
     inputs:
       gradleWrapperFile: 'gradlew'
