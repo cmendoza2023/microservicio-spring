@@ -33,6 +33,17 @@ jobs:
       organization: 'mendocorp'
       scannerMode: 'Other'
     displayName: 'Preparación para pruebas de SonarCloud'
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      tasks: 'sonarqube'
+      publishJUnitResults: false
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: true
+      sqGradlePluginVersionChoice: 'specify'
+      sonarQubeGradlePluginVersion: '3.5.0.2730'
+      spotBugsAnalysis: false
+    displayName: 'Analisis Sonar Qube'
   - task: Docker@2
     inputs:
       containerRegistry: 'docker-cristianmendoza'
