@@ -48,7 +48,7 @@ jobs:
       sqGradlePluginVersionChoice: 'specify'
       sonarQubeGradlePluginVersion: '3.5.0.2730'
       spotBugsAnalysis: false
-    displayName: 'Analisis Sonar Qube'
+    displayName: 'Analisis SonarQube'
   - task: SonarCloudAnalyze@1    
   - task: Docker@2
     inputs:
