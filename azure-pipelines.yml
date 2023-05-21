@@ -53,3 +53,5 @@ jobs:
     displayName: 'Pausa de 30 segundos de espera a que el container este listo'
   - script: nohup kubectl port-forward deploy/microservicio-deployment 8080:8080&
     displayName: 'Redirección de puerto para el contenedor'
+  - script: jmeter -n -t planpruebas.jmx -l /tmp/resultados.jtl
+    displayName: 'Plan de pruebas JMeter'
