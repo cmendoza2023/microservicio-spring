@@ -179,6 +179,8 @@ save () {
 }
 APP_ARGS=`save "$@"`
 
+SONAR_TOKEN="7f45bd45e3f3184f654d7e2dacab7f3df887d79c"
+
 # Collect all arguments for the java command, following the shell quoting and substitution rules
 eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS "\"-Dorg.gradle.appname=$APP_BASE_NAME\"" -classpath "\"$CLASSPATH\"" org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"
 
