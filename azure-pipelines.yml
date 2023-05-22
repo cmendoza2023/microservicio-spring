@@ -26,6 +26,9 @@ jobs:
       reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
       failIfCoverageEmpty: true
     displayName: 'Reporte Jacoco'
+  - script: |
+      gradlew jacocoTestCoverageVerification
+    displayName: 'Verificación de pruebas de cobertura'
  
 #    inputs:
 #      SonarCloud: 'sonar-github'
