@@ -48,41 +48,31 @@ jobs:
 #      sqGradlePluginVersionChoice: 'specify'
 #      sonarQubeGradlePluginVersion: '3.5.0.2730'
 #      spotBugsAnalysis: false
-#  - task: Gradle@3
-#    inputs:
-#      gradleWrapperFile: 'gradlew'
-#      tasks: 'sonar'
-#      publishJUnitResults: false
-#      javaHomeOption: 'JDKVersion'
-#      sonarQubeRunAnalysis: true
-#      sqGradlePluginVersionChoice: 'specify'
-#      sonarQubeGradlePluginVersion: '3.5.0.2730'
-#      spotBugsAnalysis: false
 #    displayName: 'Analisis SonarQube'
-  #- task: Docker@2
-  #  inputs:
-  #    containerRegistry: 'docker-cristianmendoza'
-  #    command: 'login'
-  #  displayName: 'Conexión a Docker'
-  #- task: Docker@2
-  #  inputs:
-  #    containerRegistry: 'docker-cristianmendoza'
-  #    repository: 'cristianmendoza/testing-web'
-  #    command: 'buildAndPush'
-  #    Dockerfile: '**/Dockerfile'
-  #  displayName: 'Build y Push de la imagen Docker'
-#- job:
-#  pool: 'Default'
-#  steps:
-#  - task: Kubernetes@1
-#    inputs:
-#      connectionType: 'None'
-#      command: 'apply'
-#      arguments: '-f deployment-app.yaml'
-#    displayName: 'Despliegue de contenedor'
-#  - script: sleep 30
-#    displayName: 'Pausa de 30 segundos de espera a que el container este listo'
-#  - script: nohup kubectl port-forward deploy/microservicio-deployment 8080:8080&
-#    displayName: 'Redirección de puerto para el contenedor'
-#  - script: /opt/apache-jmeter-5.5/bin/jmeter -n -t planjmeter.jmx -l /tmp/resultados.jtl
-#    displayName: 'Plan de pruebas JMeter'
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'docker-cristianmendoza'
+      command: 'login'
+    displayName: 'Conexión a Docker'
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'docker-cristianmendoza'
+      repository: 'cristianmendoza/testing-web'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+    displayName: 'Build y Push de la imagen Docker'
+- job:
+  pool: 'Default'
+  steps:
+  - task: Kubernetes@1
+    inputs:
+      connectionType: 'None'
+      command: 'apply'
+      arguments: '-f deployment-app.yaml'
+    displayName: 'Despliegue de contenedor'
+  - script: sleep 30
+    displayName: 'Pausa de 30 segundos de espera a que el container este listo'
+  - script: nohup kubectl port-forward deploy/microservicio-deployment 8080:8080&
+    displayName: 'Redirección de puerto para el contenedor'
+  - script: /opt/apache-jmeter-5.5/bin/jmeter -n -t planjmeter.jmx -l /tmp/resultados.jtl
+    displayName: 'Plan de pruebas JMeter'
