@@ -8,6 +8,9 @@ jobs:
   - script: |
       git fetch --unshallow
     displayName: 'Convert to non-shallow clone' 
+  - script: |
+      chmod 755 gradlew
+    displayName: 'Permisos de ejecución de gradlew para evitar warning'
   - task: Gradle@3
     inputs:
       gradleWrapperFile: 'gradlew'
@@ -27,7 +30,7 @@ jobs:
       failIfCoverageEmpty: true
     displayName: 'Reporte Jacoco'
   - script: |
-      gradlew jacocoTestCoverageVerification
+      ./gradlew jacocoTestCoverageVerification
     displayName: 'Verificación de pruebas de cobertura'
  
 #    inputs:
